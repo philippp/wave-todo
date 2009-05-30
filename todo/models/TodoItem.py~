@@ -1,0 +1,8 @@
+from time import time
+from google.appengine.ext import db
+
+class TodoItem(db.Model)
+  title = db.StringProperty()
+  waveId = db.StringProperty()
+  dateCreated = db.DateTimeProperty(default=time.time())
+  dateCompleted = db.DateTimeProperty(default=None)

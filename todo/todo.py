@@ -28,18 +28,21 @@ def OnBlipSubmitted(properties, context):
   newBlip = context.GetBlipById( properties['blipId'] )
   textAdded = str(newBlip.GetDocument().GetText())
 
-  if "%s: %s" % BOT_NAME, CMD_LIST_TASKS in textAdded:
-    todoItems = TodoItem.TodoItem.all()
-    newBlip.CreateChild().GetDocument().SetText("There are todo items "+str(len( todoItems )) )
+  if "%s: %s" % (BOT_NAME, CMD_LIST_TASKS) in textAdded:
+    listText = ""
+    todoItems = TodoItem.TodoItem.all().fetch(1000)
+    for todoItem in todoItems: 
+      listText += "%s \n" % todoItem.title
+    newBlip.CreateChild().GetDocument().SetText(listText) 
   elif "%s: help" % BOT_NAME in textAdded:
     newBlip.CreateChild().GetDocument().SetText(Help())    
   elif DEBUG:
     newBlip.CreateChild().GetDocument().SetText("I do not understand %s" % textAdded)    
-
+    
 def Help():
   """ Generate and return a help string """
   help = ""
-  for cmd, desc in {CMD_LIST_TASKS:"List all Tasks"}.items()
+  for cmd, desc in {CMD_LIST_TASKS:"List all Tasks"}.items():
     help += "%s: %s - %s" % (BOT_NAME, cmd, desc)
   return help
 

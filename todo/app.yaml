@@ -7,6 +7,9 @@ handlers:
 - url: /_wave/.*
   script: todo.py
 
+- url: /
+  script: main.py
+
 - url: /scripts
   static_dir: scripts
 

@@ -11,7 +11,7 @@ from waveapi import robot
 from models import TodoItem
 
 DEBUG = True
-BOT_NAME = 'Taskmop'
+BOT_NAME = 'Todo'
 CMD_LIST_TASKS = 'show'
 
 def OnParticipantsChanged(properties, context):
@@ -41,7 +41,11 @@ def OnBlipSubmitted(properties, context):
     
 def Help():
   """ Generate and return a help string """
-  help = ""
+  help = """
+Not-very-helpful help: 
+Adding this bot makes the current wave a todo item. 
+Other commands:
+"""
   for cmd, desc in {CMD_LIST_TASKS:"List all Tasks"}.items():
     help += "%s: %s - %s" % (BOT_NAME, cmd, desc)
   return help
@@ -55,7 +59,7 @@ def Setup(context):
     waveId = root_wavelet.GetWaveId()
     )
   todoItem.put()  
-  root_wavelet.CreateBlip().GetDocument().SetText("Tagging this wave as a todo item.")
+  root_wavelet.CreateBlip().GetDocument().SetText("Tagging this wave as a todo item.\nAdd a blip with \"%s: help\" for more info ")
 
 
 if __name__ == '__main__':
